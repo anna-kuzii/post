@@ -1,6 +1,5 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import './App.css';
 import { Post } from './components/Post';
 
 export const App = () =>
