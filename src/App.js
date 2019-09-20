@@ -1,6 +1,13 @@
 import React from 'react';
-import './App.css';
+import Grid from '@material-ui/core/Grid';
+import { Post } from './components/Post';
 
 export const App = () =>
-    <div className="App" />;
+  <Grid
+    container
+    direction="row"
+    justify="center"
+  >
+    <Post />
+  </Grid>;
 
