@@ -1,21 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import { withStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { styles } from "../Comment/style";
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 615,
-    marginTop: 20
-  },
-  title: {
-    fontSize: 25,
-  },
-});
-
-export const Post = () => {
-  const classes = useStyles();
+const Post = (props) => {
+  const { classes } = props;
 
   return (
     <Card className={classes.card}>
@@ -37,4 +28,4 @@ export const Post = () => {
 };
 
 
-
+export default withStyles(styles)(Post);
