@@ -1,10 +1,12 @@
 import * as CONSTANTS from './constants';
+import defaultComment from '../assets/comments';
 
 const initialState = {
-  commentsText: []
+  commentsText: [...defaultComment]
 };
 
 export default function reducer(state = initialState, action = {}) {
+  console.log(action);
   switch (action.type) {
     case CONSTANTS.ADD_COMMENT:
       return {

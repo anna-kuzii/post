@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { CardContent, Card, Fab } from '@material-ui/core';
+import CardContent from '@material-ui/core/CardContent';
+import Card from '@material-ui/core/Card';
+import Fab from '@material-ui/core/Fab';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
@@ -32,13 +34,14 @@ class ShowComment extends Component {
 
   render() {
     const { classes, comments } = this.props;
+    console.log('comments', comments);
 
     return (
-      comments.map((item, index) => (
-          <Card className={classes.root} key={index}>
+      comments.map((item) => (
+          <Card className={classes.root} key={item.id}>
             <CardContent className={classes.commentWrapper}>
               <Typography variant="body2" component="p" className={classes.showComment}>
-                {item}
+                {item.text}
               </Typography>
               <ExpandMoreIcon />
             </CardContent>

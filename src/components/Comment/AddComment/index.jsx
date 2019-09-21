@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {CardContent, Card, TextareaAutosize, Fab} from '@material-ui/core';
+import CardContent from '@material-ui/core/CardContent';
+import Card from '@material-ui/core/Card';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Fab from '@material-ui/core/Fab';
 import { styles } from './style';
 import { addComment } from '../container/actions';
 import connect from "react-redux/es/connect/connect";
 import AddIcon from '@material-ui/icons/Add';
+import uuid from 'uuid/v4';
 
 class AddComment extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comment: ''
+      comment: {
+        id: null,
+        text: ''
+      }
     };
 
     this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -20,11 +27,18 @@ class AddComment extends Component {
 
   onAddComment() {
     this.props.addComment(this.state.comment);
-    this.setState({ comment: '' });
+    this.setState({
+      comment: {text: ''}
+    });
   };
 
   handleCommentChange(e) {
-    this.setState({ comment: e.target.value });
+    this.setState({
+      comment: {
+        id: uuid(),
+        text: e.target.value,
+      }
+    });
   };
 
   render() {
@@ -39,7 +53,7 @@ class AddComment extends Component {
             rowsMax={3}
             aria-label="comment"
             placeholder="Add a comment"
-            value={this.state.comment}
+            value={this.state.comment.text}
             onChange={this.handleCommentChange}
           />
         </CardContent>
