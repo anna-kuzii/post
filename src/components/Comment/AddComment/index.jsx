@@ -20,9 +20,6 @@ class AddComment extends Component {
         text: ''
       }
     };
-
-    this.handleCommentChange = this.handleCommentChange.bind(this);
-    this.onAddComment = this.onAddComment.bind(this);
   }
 
   onAddComment() {
@@ -54,7 +51,7 @@ class AddComment extends Component {
             aria-label="comment"
             placeholder="Add a comment"
             value={this.state.comment.text}
-            onChange={this.handleCommentChange}
+            onChange={(e) => this.handleCommentChange(e)}
           />
         </CardContent>
         <div className={classes.commentBtns}>
@@ -63,7 +60,7 @@ class AddComment extends Component {
             size="small"
             aria-label="add"
             className={classes.commentAdd}
-            onClick={this.onAddComment}
+            onClick={() => this.onAddComment()}
           >
             <AddIcon />
           </Fab>

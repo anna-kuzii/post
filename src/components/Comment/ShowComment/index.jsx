@@ -11,13 +11,13 @@ import { styles } from './style';
 import connect from "react-redux/es/connect/connect";
 import Typography from "@material-ui/core/Typography";
 import classNames from 'classnames';
+import { deleteComment } from '../container/actions';
 
 class ShowComment extends Component {
   constructor(props) {
     super(props);
 
     this.onEditComment = this.onEditComment.bind(this);
-    this.onDeleteComment = this.onDeleteComment.bind(this);
   }
 
   onAddAnswer() {
@@ -28,13 +28,12 @@ class ShowComment extends Component {
     console.log('EDIT!!!!!');
   };
 
-  onDeleteComment() {
-    console.log('Delete!!!!!');
+  onDeleteComment(id) {
+    this.props.deleteComment(id);
   };
 
   render() {
     const { classes, comments } = this.props;
-    console.log('comments', comments);
 
     return (
       comments.map((item) => (
@@ -68,7 +67,7 @@ class ShowComment extends Component {
                 size="small"
                 aria-label="delete"
                 className={classNames(classes.btns, classes.lastBtn)}
-                onClick={this.onDeleteComment}
+                onClick={() => this.onDeleteComment(item.id)}
               >
                 <DeleteIcon />
               </Fab>
@@ -85,7 +84,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-
+  deleteComment
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ShowComment));
