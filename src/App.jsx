@@ -1,9 +1,11 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Post from './components/Post';
-import Comment from "./components/Comment";
-import { styles } from './style';
 import { withStyles } from "@material-ui/core/styles";
+import Post from './components/Post';
+import AddComment from "./components/Comment/AddComment";
+import ShowComment from "./components/Comment/ShowComment";
+import { styles } from './style';
+
 
 const App = ({ classes }) =>
   <Grid
@@ -12,8 +14,9 @@ const App = ({ classes }) =>
     justify="center"
     className={classes.root}
   >
-    <Post/>
-    <Comment/>
+    <Post />
+    <ShowComment />
+    <AddComment />
   </Grid>
 
 export default withStyles(styles)(App);
