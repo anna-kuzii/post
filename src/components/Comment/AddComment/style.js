@@ -16,5 +16,12 @@ export const styles = () => ({
     width: '100%',
     padding: 5,
     boxSizing: 'border-box'
+  },
+  commentBtns: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  commentAdd: {
+    margin: '0 16px 8px'
   }
 });
