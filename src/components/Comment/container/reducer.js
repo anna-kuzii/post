@@ -3,7 +3,7 @@ import uuid from 'uuid/v4';
 import defaultComment from '../assets/comments';
 
 const initialState = {
-  commentsText: [...defaultComment]
+  comments: [...defaultComment]
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -11,17 +11,17 @@ export default function reducer(state = initialState, action = {}) {
     case CONSTANTS.ADD_COMMENT:
       return {
         ...state,
-        commentsText: [...state.commentsText, {id: uuid(), text: action.comment}],
+        comments: [...state.comments, {id: uuid(), text: action.comment}],
       };
     case CONSTANTS.DELETE_COMMENT:
       return {
         ...state,
-        commentsText: state.commentsText.filter((item) => action.id !== item.id)
+        comments: state.comments.filter((item) => action.id !== item.id)
       };
     case CONSTANTS.EDIT_COMMENT_MODE:
       return {
         ...state,
-        commentsText: state.commentsText.map((item) => {
+        comments: state.comments.map((item) => {
           return (item.id === action.id) ?
             {
               ...item,
@@ -32,7 +32,7 @@ export default function reducer(state = initialState, action = {}) {
     case CONSTANTS.EDIT_COMMENT:
       return {
         ...state,
-        commentsText: state.commentsText.map((item) => {
+        comments: state.comments.map((item) => {
           return (item.id === action.id) ?
             {
               ...item,

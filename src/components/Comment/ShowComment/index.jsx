@@ -80,8 +80,8 @@ class ShowComment extends Component {
   }
 }
 
-const mapStateToProps = ({ comments: { commentsText }}) => ({
-  comments: commentsText
+const mapStateToProps = ({ comments: { comments }}) => ({
+  comments: comments
 });
 
 const mapDispatchToProps = {
