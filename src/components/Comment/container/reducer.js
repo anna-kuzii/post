@@ -11,7 +11,7 @@ export default function reducer(state = initialState, action = {}) {
     case CONSTANTS.ADD_COMMENT:
       return {
         ...state,
-        commentsText: [...state.commentsText, {...action.comment, id: uuid()}],
+        commentsText: [...state.commentsText, {id: uuid(), text: action.comment}],
       };
     case CONSTANTS.DELETE_COMMENT:
       return {
@@ -22,27 +22,23 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         commentsText: state.commentsText.map((item) => {
-          if (item.id === action.id) {
-            return {
+          return (item.id === action.id) ?
+            {
               ...item,
               isEdit: action.mode,
-            };
-          }
-          return item;
+            } : item;
         }),
       };
     case CONSTANTS.EDIT_COMMENT:
       return {
         ...state,
         commentsText: state.commentsText.map((item) => {
-          if (item.id === action.id) {
-            return {
+          return (item.id === action.id) ?
+            {
               ...item,
               text: action.commentText,
               isEdit: false,
-            };
-          }
-          return item;
+            } : item;
         }),
       };
     default:

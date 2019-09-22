@@ -16,36 +16,30 @@ class AddComment extends Component {
     super(props);
 
     this.state = {
-      comment: {
-        text: !this.props.isEdit ? '' : this.props.comment.text
-      }
+      commentText: !this.props.isEdit ? '' : this.props.comment.text
     };
   }
 
   onAddComment() {
     if(!this.props.isEdit) {
-      this.props.addComment(this.state.comment);
+      this.props.addComment(this.state.commentText);
       this.setState({
-        comment: {text: ''}
+        commentText: ''
       });
     } else {
-      this.props.editComment(this.props.comment.id, this.state.comment.text);
+      this.props.editComment(this.props.comment.id, this.state.commentText);
     }
   };
 
   handleCommentChange(e) {
     this.setState({
-      comment: {
-        text: e.target.value,
-      }
+      commentText: e.target.value,
     });
   };
 
   onCloseComment() {
     this.setState({
-      comment: {
-        text: this.props.comment.text,
-      }
+      commentText: this.props.comment.text,
     });
     this.props.editCommentMode(this.props.comment.id, false);
   }
@@ -62,7 +56,7 @@ class AddComment extends Component {
             rowsMax={3}
             aria-label="comment"
             placeholder="Add a comment"
-            value={this.state.comment.text}
+            value={this.state.commentText}
             onChange={(e) => this.handleCommentChange(e)}
           />
         </CardContent>
