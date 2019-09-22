@@ -11,21 +11,17 @@ import { styles } from './style';
 import connect from "react-redux/es/connect/connect";
 import Typography from "@material-ui/core/Typography";
 import classNames from 'classnames';
-import { deleteComment } from '../container/actions';
+import { deleteComment, editCommentMode } from '../container/actions';
+import AddComment from '../AddComment';
 
 class ShowComment extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onEditComment = this.onEditComment.bind(this);
-  }
 
   onAddAnswer() {
     console.log('Answer!!!!!');
   };
 
-  onEditComment() {
-    console.log('EDIT!!!!!');
+  onEditCommentMode(id) {
+    this.props.editCommentMode(id, true);
   };
 
   onDeleteComment(id) {
@@ -37,54 +33,60 @@ class ShowComment extends Component {
 
     return (
       comments.map((item) => (
-          <Card className={classes.root} key={item.id}>
-            <CardContent className={classes.commentWrapper}>
-              <Typography variant="body2" component="p" className={classes.showComment}>
-                {item.text}
-              </Typography>
-              <ExpandMoreIcon />
-            </CardContent>
-            <div className={classes.commentBtns}>
-              <Fab
-                color="primary"
-                size="small"
-                aria-label="add"
-                className={classes.btns}
-                onClick={this.onAddAnswer}
-              >
-                <AddIcon />
-              </Fab>
-              <Fab
-                color="secondary"
-                aria-label="edit"
-                size="small"
-                className={classes.btns}
-                onClick={this.onEditComment}
-              >
-                <EditIcon />
-              </Fab>
-              <Fab
-                size="small"
-                aria-label="delete"
-                className={classNames(classes.btns, classes.lastBtn)}
-                onClick={() => this.onDeleteComment(item.id)}
-              >
-                <DeleteIcon />
-              </Fab>
-            </div>
-          </Card>
+          <div key={item.id}>
+            {!item.isEdit ?
+              <Card className={classes.root}>
+                <CardContent className={classes.commentWrapper}>
+                  <Typography variant="body2" component="p" className={classes.showComment}>
+                    {item.text}
+                  </Typography>
+                  <ExpandMoreIcon/>
+                </CardContent>
+                <div className={classes.commentBtns}>
+                  <Fab
+                    color="primary"
+                    size="small"
+                    aria-label="add"
+                    className={classes.btns}
+                    onClick={this.onAddAnswer}
+                  >
+                    <AddIcon/>
+                  </Fab>
+                  <Fab
+                    color="secondary"
+                    aria-label="edit"
+                    size="small"
+                    className={classes.btns}
+                    onClick={() => this.onEditCommentMode(item.id)}
+                  >
+                    <EditIcon/>
+                  </Fab>
+                  <Fab
+                    size="small"
+                    aria-label="delete"
+                    className={classNames(classes.btns, classes.lastBtn)}
+                    onClick={() => this.onDeleteComment(item.id)}
+                  >
+                    <DeleteIcon/>
+                  </Fab>
+                </div>
+              </Card> :
+              <AddComment isEdit={item.isEdit} comment={item} />
+            }
+          </div>
         )
       )
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  comments: state.comments.commentsText
+const mapStateToProps = ({ comments: { commentsText }}) => ({
+  comments: commentsText
 });
 
 const mapDispatchToProps = {
-  deleteComment
+  deleteComment,
+  editCommentMode,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ShowComment));

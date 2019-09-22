@@ -5,10 +5,11 @@ import Card from '@material-ui/core/Card';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Fab from '@material-ui/core/Fab';
 import { styles } from './style';
-import { addComment } from '../container/actions';
+import { addComment, editComment, editCommentMode } from '../container/actions';
 import connect from "react-redux/es/connect/connect";
+import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
-import uuid from 'uuid/v4';
+import classNames from 'classnames';
 
 class AddComment extends Component {
   constructor(props) {
@@ -16,30 +17,41 @@ class AddComment extends Component {
 
     this.state = {
       comment: {
-        id: null,
-        text: ''
+        text: !this.props.isEdit ? '' : this.props.comment.text
       }
     };
   }
 
   onAddComment() {
-    this.props.addComment(this.state.comment);
-    this.setState({
-      comment: {text: ''}
-    });
+    if(!this.props.isEdit) {
+      this.props.addComment(this.state.comment);
+      this.setState({
+        comment: {text: ''}
+      });
+    } else {
+      this.props.editComment(this.props.comment.id, this.state.comment.text);
+    }
   };
 
   handleCommentChange(e) {
     this.setState({
       comment: {
-        id: uuid(),
         text: e.target.value,
       }
     });
   };
 
+  onCloseComment() {
+    this.setState({
+      comment: {
+        text: this.props.comment.text,
+      }
+    });
+    this.props.editCommentMode(this.props.comment.id, false);
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, isEdit } = this.props;
 
     return (
       <Card className={classes.root}>
@@ -64,6 +76,15 @@ class AddComment extends Component {
           >
             <AddIcon />
           </Fab>
+          {isEdit && <Fab
+            color="secondary"
+            size="small"
+            aria-label="add"
+            className={classNames(classes.commentAdd, classes.lastBtn)}
+            onClick={() => this.onCloseComment()}
+          >
+            <CloseIcon />
+          </Fab>}
         </div>
       </Card>
     )
@@ -72,6 +93,8 @@ class AddComment extends Component {
 
 const mapDispatchToProps = {
   addComment,
+  editComment,
+  editCommentMode
 };
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(AddComment));

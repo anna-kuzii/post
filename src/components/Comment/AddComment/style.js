@@ -23,5 +23,8 @@ export const styles = () => ({
   },
   commentAdd: {
     margin: '0 16px 8px'
+  },
+  lastBtn: {
+    margin: '0 16px 8px 0'
   }
 });
