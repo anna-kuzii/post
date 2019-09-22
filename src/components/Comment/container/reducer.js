@@ -21,25 +21,25 @@ export default function reducer(state = initialState, action = {}) {
     case CONSTANTS.EDIT_COMMENT_MODE:
       return {
         ...state,
-        comments: state.comments.map((item) => {
-          return (item.id === action.id) ?
+        comments: state.comments.map((item) =>
+          (item.id === action.id) ?
             {
               ...item,
               isEdit: action.mode,
-            } : item;
-        }),
+            } : item
+        ),
       };
     case CONSTANTS.EDIT_COMMENT:
       return {
         ...state,
-        comments: state.comments.map((item) => {
-          return (item.id === action.id) ?
+        comments: state.comments.map((item) =>
+          (item.id === action.id) ?
             {
               ...item,
               text: action.commentText,
               isEdit: false,
-            } : item;
-        }),
+            } : item
+        ),
       };
     default:
       return state;
