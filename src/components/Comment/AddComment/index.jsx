@@ -5,41 +5,47 @@ import Card from '@material-ui/core/Card';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Fab from '@material-ui/core/Fab';
 import { styles } from './style';
-import { addComment } from '../container/actions';
+import { addComment, editComment, editCommentMode } from '../container/actions';
 import connect from "react-redux/es/connect/connect";
+import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
-import uuid from 'uuid/v4';
+import classNames from 'classnames';
 
 class AddComment extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comment: {
-        id: null,
-        text: ''
-      }
+      commentText: !this.props.isEdit ? '' : this.props.comment.text
     };
   }
 
   onAddComment() {
-    this.props.addComment(this.state.comment);
-    this.setState({
-      comment: {text: ''}
-    });
+    if(!this.props.isEdit) {
+      this.props.addComment(this.state.commentText);
+      this.setState({
+        commentText: ''
+      });
+    } else {
+      this.props.editComment(this.props.comment.id, this.state.commentText);
+    }
   };
 
   handleCommentChange(e) {
     this.setState({
-      comment: {
-        id: uuid(),
-        text: e.target.value,
-      }
+      commentText: e.target.value,
     });
   };
 
+  onCloseComment() {
+    this.setState({
+      commentText: this.props.comment.text,
+    });
+    this.props.editCommentMode(this.props.comment.id, false);
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, isEdit } = this.props;
 
     return (
       <Card className={classes.root}>
@@ -50,7 +56,7 @@ class AddComment extends Component {
             rowsMax={3}
             aria-label="comment"
             placeholder="Add a comment"
-            value={this.state.comment.text}
+            value={this.state.commentText}
             onChange={(e) => this.handleCommentChange(e)}
           />
         </CardContent>
@@ -64,6 +70,15 @@ class AddComment extends Component {
           >
             <AddIcon />
           </Fab>
+          {isEdit && <Fab
+            color="secondary"
+            size="small"
+            aria-label="add"
+            className={classNames(classes.commentAdd, classes.lastBtn)}
+            onClick={() => this.onCloseComment()}
+          >
+            <CloseIcon />
+          </Fab>}
         </div>
       </Card>
     )
@@ -72,6 +87,8 @@ class AddComment extends Component {
 
 const mapDispatchToProps = {
   addComment,
+  editComment,
+  editCommentMode
 };
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(AddComment));
