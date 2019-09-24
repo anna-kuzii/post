@@ -18,28 +18,25 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         comments: state.comments.filter((item) => action.id !== item.id)
       };
-    case CONSTANTS.EDIT_COMMENT_MODE:
+    case CONSTANTS.EDIT_COMMENT_SUCCESS:
       return {
         ...state,
-        comments: state.comments.map((item) =>
-          (item.id === action.id) ?
-            {
-              ...item,
-              isEdit: action.mode,
-            } : item
-        ),
+        comments: action.data
       };
-    case CONSTANTS.EDIT_COMMENT:
+    case CONSTANTS.EDIT_COMMENT_ERROR:
       return {
         ...state,
-        comments: state.comments.map((item) =>
-          (item.id === action.id) ?
-            {
-              ...item,
-              text: action.commentText,
-              isEdit: false,
-            } : item
-        ),
+        error: action.error
+      };
+    case CONSTANTS.EDIT_COMMENT_MODE_SUCCESS:
+      return {
+        ...state,
+        comments: action.data
+      };
+    case CONSTANTS.EDIT_COMMENT_MODE_ERROR:
+      return {
+        ...state,
+        error: action.error
       };
     default:
       return state;

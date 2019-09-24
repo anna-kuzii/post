@@ -19,5 +19,9 @@ export const styles = () => ({
   },
   showComment: {
     width: '100%'
+  },
+  answerWrapper: {
+    marginLeft: '30px',
+    width: 'auto'
   }
 });
