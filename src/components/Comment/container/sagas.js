@@ -48,7 +48,14 @@ function changeCommentsMode(comments, action) {
 
 function deleteComments(comments, action) {
   console.log('comments!!!! ', comments);
-
+  return comments.reduce((res, comment) => {
+    if(comment.id === action.id) {
+      return res;
+    } else if (comment.comments) {
+      return [...res, {...comment, comments:  deleteComments(comment.comments, action)}];
+    }
+    return [...res, comment];
+  }, []);
 }
 
 function* changeCommentsModeAsync(action) {
@@ -81,7 +88,7 @@ function* deleteCommentsAsync(action) {
     const state = yield select();
     const newComments = deleteComments(state.comments.comments, action);
 
-    console.log('saga!!! ', ...newComments);
+    console.log('saga!!! ', newComments);
     yield put(actions.deleteCommentSuccess(newComments));
 
   } catch (error) {
