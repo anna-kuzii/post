@@ -26,5 +26,9 @@ export const styles = () => ({
   },
   lastBtn: {
     margin: '0 16px 8px 0'
+  },
+  answerWrapper: {
+    marginLeft: '30px',
+    width: 'auto'
   }
 });

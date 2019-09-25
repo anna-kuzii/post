@@ -20,9 +20,9 @@ class AddComment extends Component {
     };
   }
 
-  onAddComment() {
+  onAddComment(parentId) {
     if(!this.props.isEdit) {
-      this.props.addComment(this.state.commentText);
+      this.props.addComment(this.state.commentText, parentId);
       this.setState({
         commentText: ''
       });
@@ -45,10 +45,10 @@ class AddComment extends Component {
   }
 
   render() {
-    const { classes, isEdit } = this.props;
+    const { classes, isEdit, isAnswer, parentId } = this.props;
 
     return (
-      <Card className={classes.root}>
+      <Card className={classNames(classes.root, isAnswer && classes.answerWrapper)}>
         <CardContent className={classes.commentWrapper}>
           <TextareaAutosize
             className={classes.commentInput}
@@ -66,7 +66,7 @@ class AddComment extends Component {
             size="small"
             aria-label="add"
             className={classes.commentAdd}
-            onClick={() => this.onAddComment()}
+            onClick={() => this.onAddComment(parentId)}
           >
             <AddIcon />
           </Fab>

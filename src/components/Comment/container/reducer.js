@@ -8,38 +8,61 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case CONSTANTS.ADD_ANSWER_MODE:
+      return {
+        ...state,
+        comments: state.comments.map((item) => (
+          (item.id === action.id) ?
+            {
+              ...item,
+              addAnswer: action.mode,
+            } : item
+          )
+        )
+      };
     case CONSTANTS.ADD_COMMENT:
       return {
         ...state,
-        comments: [...state.comments, {id: uuid(), text: action.comment}],
+        comments: (!action.parentId) ?
+          [...state.comments, {id: uuid(), text: action.comment}]:
+          state.comments.map((item) => (
+            (item.id === action.parentId) ?
+              {
+                ...item,
+                comments: [...item.comments, {id: uuid(), text: action.comment}],
+              } : item
+            )
+          )
       };
-    case CONSTANTS.DELETE_COMMENT:
+    case CONSTANTS.DELETE_COMMENT_SUCCESS:
       return {
         ...state,
-        comments: state.comments.filter((item) => action.id !== item.id)
+        comments: action.data
       };
-    case CONSTANTS.EDIT_COMMENT_MODE:
+    case CONSTANTS.DELETE_COMMENT_ERROR:
       return {
         ...state,
-        comments: state.comments.map((item) =>
-          (item.id === action.id) ?
-            {
-              ...item,
-              isEdit: action.mode,
-            } : item
-        ),
+        error: action.error
       };
-    case CONSTANTS.EDIT_COMMENT:
+    case CONSTANTS.EDIT_COMMENT_SUCCESS:
       return {
         ...state,
-        comments: state.comments.map((item) =>
-          (item.id === action.id) ?
-            {
-              ...item,
-              text: action.commentText,
-              isEdit: false,
-            } : item
-        ),
+        comments: action.data
+      };
+    case CONSTANTS.EDIT_COMMENT_ERROR:
+      return {
+        ...state,
+        error: action.error
+      };
+    case CONSTANTS.EDIT_COMMENT_MODE_SUCCESS:
+      return {
+        ...state,
+        comments: action.data
+      };
+    case CONSTANTS.EDIT_COMMENT_MODE_ERROR:
+      return {
+        ...state,
+        error: action.error
       };
     default:
       return state;
