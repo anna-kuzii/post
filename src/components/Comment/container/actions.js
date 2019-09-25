@@ -7,6 +7,12 @@ export const addAnswerMode = (id, mode) => ({
   mode
 });
 
+// TOGGLE COMMENTS
+export const toggleComment = (id) => ({
+  type: CONSTANTS.TOGGLE_COMMENTS,
+  id
+});
+
 // ADD COMMENT ACTIONS
 export const addComment = (comment, parentId) => ({
   type: CONSTANTS.ADD_COMMENT,

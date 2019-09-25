@@ -1,5 +1,7 @@
 export const ADD_ANSWER_MODE = 'ADD_ANSWER_MODE';
 
+export const TOGGLE_COMMENTS = 'TOGGLE_COMMENTS';
+
 // ADD COMMENT
 export const ADD_COMMENT = 'ADD_COMMENT';
 

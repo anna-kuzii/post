@@ -9,17 +9,26 @@ const RenderComments = ({ comments, classes, isAnswer = false }) =>
   comments.map((item) => (
       <div key={item.id} className={classes.root}>
         {!item.isEdit ?
-          <Comment element={item} isAnswer={isAnswer}/> :
-          <AddComment isEdit={item.isEdit} comment={item} isAnswer={isAnswer}/>
+          <Comment
+            element={item}
+            isAnswer={isAnswer}
+            showAnswer={item.comments && item.comments.length}
+            isOpen={item.isOpen}
+          /> :
+          <AddComment
+            isEdit={item.isEdit}
+            comment={item}
+            isAnswer={isAnswer}
+          />
         }
         {item.addAnswer && <AddComment parentId={item.id} isAnswer={true}/>}
-        {(item.comments && item.comments.length) ?
-          <RenderComments comments={item.comments} isAnswer={true} classes/> :
+        {(item.comments && item.comments.length && item.isOpen) ?
+          <RenderComments comments={item.comments} isAnswer={true} classes /> :
           null
         }
       </div>
     )
-  )
+  );
 
 const mapStateToProps = ({ comments: { comments } }) => ({
   comments: comments
