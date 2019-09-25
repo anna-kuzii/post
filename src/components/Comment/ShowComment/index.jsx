@@ -12,7 +12,7 @@ const RenderComments = ({comments, classes, isAnswer = false}) =>
           <Comment element={item} isAnswer={isAnswer}/> :
           <AddComment isEdit={item.isEdit} comment={item} isAnswer={isAnswer}/>
         }
-        {item.addAnswer && <AddComment parentId={item.id} />}
+        {item.addAnswer && <AddComment parentId={item.id} isAnswer={true} />}
         {item.comments && item.comments.length &&
         <RenderComments comments={item.comments} isAnswer={true} classes/>}
       </div>
