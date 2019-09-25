@@ -3,6 +3,7 @@ import classNames from "classnames";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Fab from "@material-ui/core/Fab";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -10,7 +11,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from './style';
-import { deleteComment, editCommentMode, addAnswerMode } from "../container/actions";
+import { deleteComment, editCommentMode, addAnswerMode, toggleComment } from "../container/actions";
 import connect from "react-redux/es/connect/connect";
 
 class Comment extends Component {
@@ -26,8 +27,20 @@ class Comment extends Component {
     this.props.deleteComment(id);
   };
 
+  onToggleComment(id) {
+    this.props.toggleComment(id);
+  };
+
+  expandArrow() {
+    const { element, isOpen } = this.props;
+
+    return isOpen ?
+      <ExpandMoreIcon onClick={() => this.onToggleComment(element.id)} /> :
+      <ExpandLessIcon onClick={() => this.onToggleComment(element.id)} />
+  }
+
   render() {
-    const {classes, element, isAnswer} = this.props;
+    const { classes, element, isAnswer, showAnswer } = this.props;
 
     return (
       <Card className={classNames(classes.root, isAnswer && classes.answerWrapper)}>
@@ -35,7 +48,7 @@ class Comment extends Component {
           <Typography variant="body2" component="p" className={classes.showComment}>
             {element.text}
           </Typography>
-          <ExpandMoreIcon/>
+          {showAnswer && this.expandArrow()}
         </CardContent>
         <div className={classes.commentBtns}>
           {!isAnswer && <Fab
@@ -73,7 +86,8 @@ class Comment extends Component {
 const mapDispatchToProps = {
   deleteComment,
   editCommentMode,
-  addAnswerMode
+  addAnswerMode,
+  toggleComment
 };
 
 

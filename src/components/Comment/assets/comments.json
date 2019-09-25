@@ -2,6 +2,7 @@
   {
     "id": "79f59271-94e3-42be-a2ad-733bfe7f5f58",
     "text": "First Comment",
+    "isOpen": false,
     "comments": [
       {
         "id": "4be4cef1-c41e-48b5-8fcd-c52b01370e4b",
@@ -12,6 +13,7 @@
   {
     "id": "3fcfdcd8-75ee-42f9-b202-ad955a478616",
     "text": "Hi there!",
+    "isOpen": false,
     "comments": [
       {
         "id": "727b8a8c-53dd-460e-b81d-1618f7ea8584",
@@ -21,6 +23,7 @@
   },
   {
     "id": "f5eb1da2-1724-444a-81e8-7a8b5812c3bf",
-    "text": "Keep Commenting :)"
+    "text": "Keep Commenting :)",
+    "isOpen": false
   }
 ]

@@ -8,6 +8,18 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case CONSTANTS.TOGGLE_COMMENTS:
+      return {
+        ...state,
+        comments: state.comments.map((item) => (
+            (item.id === action.id) ?
+              {
+                ...item,
+                isOpen: !item.isOpen,
+              } : item
+          )
+        )
+      };
     case CONSTANTS.ADD_ANSWER_MODE:
       return {
         ...state,
@@ -27,10 +39,16 @@ export default function reducer(state = initialState, action = {}) {
           [...state.comments, {id: uuid(), text: action.comment}]:
           state.comments.map((item) => (
             (item.id === action.parentId) ?
-              {
-                ...item,
-                comments: [...item.comments, {id: uuid(), text: action.comment}],
-              } : item
+              item.comments ?
+                {
+                  ...item,
+                  comments: [...item.comments, {id: uuid(), text: action.comment}],
+                } :
+                {
+                  ...item,
+                  comments: [{id: uuid(), text: action.comment}],
+                }
+              : item
             )
           )
       };
