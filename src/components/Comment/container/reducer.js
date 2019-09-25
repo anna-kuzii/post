@@ -1,13 +1,30 @@
 import * as CONSTANTS from './constants';
 import uuid from 'uuid/v4';
-import defaultComment from '../assets/comments';
 
 const initialState = {
-  comments: [...defaultComment]
+  comments: [],
+  isLoading: false
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case CONSTANTS.FETCH_COMMENT_SUCCESS:
+      return {
+        ...state,
+        comments: action.data,
+        isLoading: false
+      };
+    case CONSTANTS.FETCH_COMMENT_ERROR:
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false
+      };
+    case CONSTANTS.FETCH_COMMENT_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+      };
     case CONSTANTS.TOGGLE_COMMENTS:
       return {
         ...state,
