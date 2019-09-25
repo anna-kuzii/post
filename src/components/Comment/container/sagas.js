@@ -5,6 +5,7 @@ import * as actions from './actions';
 export function* watchCommentsSaga() {
   yield takeEvery(CONSTANTS.EDIT_COMMENT_MODE, changeCommentsModeAsync);
   yield takeEvery(CONSTANTS.EDIT_COMMENT, changeCommentsAsync);
+  yield takeEvery(CONSTANTS.DELETE_COMMENT, deleteCommentsAsync);
 }
 
 function changeComments(comments, action) {
@@ -45,6 +46,11 @@ function changeCommentsMode(comments, action) {
   });
 }
 
+function deleteComments(comments, action) {
+  console.log('comments!!!! ', comments);
+
+}
+
 function* changeCommentsModeAsync(action) {
   try {
     const state = yield select();
@@ -70,3 +76,15 @@ function* changeCommentsAsync(action) {
   }
 }
 
+function* deleteCommentsAsync(action) {
+  try {
+    const state = yield select();
+    const newComments = deleteComments(state.comments.comments, action);
+
+    console.log('saga!!! ', ...newComments);
+    yield put(actions.deleteCommentSuccess(newComments));
+
+  } catch (error) {
+    yield put(actions.deleteCommentError(error));
+  }
+}

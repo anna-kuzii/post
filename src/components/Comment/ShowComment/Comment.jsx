@@ -10,12 +10,12 @@ import AddIcon from "@material-ui/icons/Add";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from './style';
-import { deleteComment, editCommentMode } from "../container/actions";
+import { deleteComment, editCommentMode, addAnswerMode } from "../container/actions";
 import connect from "react-redux/es/connect/connect";
 
 class Comment extends Component {
-  onAddAnswer(id) {
-    console.log('Answer ', id);
+  onAddAnswerMode(id) {
+    this.props.addAnswerMode(id, true);
   };
 
   onEditCommentMode(id) {
@@ -43,7 +43,7 @@ class Comment extends Component {
             size="small"
             aria-label="add"
             className={classes.btns}
-            onClick={() => this.onAddAnswer(element.id)}
+            onClick={() => this.onAddAnswerMode(element.id)}
           >
             <AddIcon/>
           </Fab>}
@@ -73,6 +73,7 @@ class Comment extends Component {
 const mapDispatchToProps = {
   deleteComment,
   editCommentMode,
+  addAnswerMode
 };
 
 

@@ -1,13 +1,33 @@
 import * as CONSTANTS from './constants';
 
-export const addComment = (comment) => ({
-  type: CONSTANTS.ADD_COMMENT,
-  comment
+// ADD ANSWER MODE ACTIONS
+export const addAnswerMode = (id, mode) => ({
+  type: CONSTANTS.ADD_ANSWER_MODE,
+  id,
+  mode
 });
 
+// ADD COMMENT ACTIONS
+export const addComment = (comment, parentId) => ({
+  type: CONSTANTS.ADD_COMMENT,
+  comment,
+  parentId
+});
+
+// DELETE COMMENT ACTIONS
 export const deleteComment = (id) => ({
   type: CONSTANTS.DELETE_COMMENT,
   id
+});
+
+export const deleteCommentSuccess = (data) => ({
+  type: CONSTANTS.DELETE_COMMENT_SUCCESS,
+  data
+});
+
+export const deleteCommentError = (error) => ({
+  type: CONSTANTS.DELETE_COMMENT_ERROR,
+  error
 });
 
 // EDIT COMMENT MODE ACTIONS
