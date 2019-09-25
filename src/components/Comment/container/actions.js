@@ -53,7 +53,7 @@ export const editCommentModeError = (error) => ({
   error
 });
 
-// EDIT  COMMENT  ACTIONS
+// EDIT COMMENT ACTIONS
 export const editComment = (id, commentText) => ({
   type: CONSTANTS.EDIT_COMMENT,
   id,
@@ -69,3 +69,19 @@ export const editCommentError = (error) => ({
   type: CONSTANTS.EDIT_COMMENT_ERROR,
   error
 });
+
+// FETCH COMMENT ACTIONS
+export const fetchCommentSuccess = (results) => ({
+  type: CONSTANTS.FETCH_COMMENT_SUCCESS,
+  data: results
+});
+
+export const fetchCommentError = (error) => ({
+  type: CONSTANTS.FETCH_COMMENT_ERROR,
+  error
+});
+
+export const fetchCommentPending = () => ({
+  type: CONSTANTS.FETCH_COMMENT_PENDING,
+});
+

@@ -1,11 +1,34 @@
-import { select, takeEvery, put } from 'redux-saga/effects';
+import { select, takeEvery, put, call } from 'redux-saga/effects';
 import * as CONSTANTS from './constants';
 import * as actions from './actions';
+import defaultComment from '../assets/comments';
 
 export function* watchCommentsSaga() {
+  yield fetchComments();
   yield takeEvery(CONSTANTS.EDIT_COMMENT_MODE, changeCommentsModeAsync);
   yield takeEvery(CONSTANTS.EDIT_COMMENT, changeCommentsAsync);
   yield takeEvery(CONSTANTS.DELETE_COMMENT, deleteCommentsAsync);
+}
+
+function fakeAPICall() {
+  return new Promise((resolve, reject) => {
+    let wait = setTimeout(() => {
+      clearTimeout(wait);
+      resolve(defaultComment);
+      reject(new Error('Time out'));
+    }, 500)
+  })
+}
+
+function* fetchComments() {
+  try {
+    yield put(actions.fetchCommentPending());
+
+    const results = yield call(fakeAPICall);
+    yield put(actions.fetchCommentSuccess(results));
+  } catch(error) {
+    yield put(actions.fetchCommentError(error));
+  }
 }
 
 function changeComments(comments, action) {

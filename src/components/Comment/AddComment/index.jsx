@@ -45,7 +45,9 @@ class AddComment extends Component {
   }
 
   render() {
-    const { classes, isEdit, isAnswer, parentId } = this.props;
+    const { classes, isEdit, isAnswer, parentId, isLoading } = this.props;
+
+    if(isLoading) return null;
 
     return (
       <Card className={classNames(classes.root, isAnswer && classes.answerWrapper)}>
@@ -91,4 +93,8 @@ const mapDispatchToProps = {
   editCommentMode
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(AddComment));
+const mapStateToProps = ({ comments: { isLoading }}) => ({
+  isLoading
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AddComment));
